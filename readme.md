@@ -1,3 +1,23 @@
 # 介绍
 
 这是一本课堂笔记本
+
+笔记包含mermaid插件显示为保证效果请使用[Typora](https://typora.io/)进行查看
+
+img文件夹用于存放图片
+
+笔记状态：未完成:negative_squared_cross_mark:	完成笔记:white_check_mark:
+
+笔记树
+
+- 基于操作系统编程
+  - 简介+第一章内容 :negative_squared_cross_mark:
+- 嵌入式系统及应用
+  - 课程介绍​ :white_check_mark:
+  - 嵌入式系统概述 :negative_squared_cross_mark:
+- 操作系统
+  - 第一章​ :negative_squared_cross_mark:
+- 软件工程
+  - 简介 :white_check_mark:
+  - 软件工程简介​ :negative_squared_cross_mark:
+
