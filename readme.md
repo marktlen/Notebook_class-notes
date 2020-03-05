@@ -6,18 +6,20 @@
 
 img文件夹用于存放图片
 
-笔记状态：未完成:negative_squared_cross_mark:	完成笔记:white_check_mark:
+笔记状态：未完成:negative_squared_cross_mark:
 
 笔记树
 
 - 基于操作系统编程
-  - 简介+第一章内容 :negative_squared_cross_mark:
+  - 简介+第一章内容
+  - 文件操作:negative_squared_cross_mark:
 - 嵌入式系统及应用
-  - 课程介绍​ :white_check_mark:
-  - 嵌入式系统概述 :negative_squared_cross_mark:
+  - 课程介绍​
+  - 嵌入式系统概述
+  - 软件系统:negative_squared_cross_mark:
 - 操作系统
-  - 第一章​ :negative_squared_cross_mark:
+  - 第一章​
+  - 进程与线程:negative_squared_cross_mark:
 - 软件工程
-  - 简介 :white_check_mark:
+  - 简介
   - 软件工程简介​ :negative_squared_cross_mark:
-
