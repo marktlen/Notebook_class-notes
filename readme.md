@@ -16,10 +16,12 @@ img文件夹用于存放图片
 - 嵌入式系统及应用
   - 课程介绍​
   - 嵌入式系统概述
-  - 软件系统:negative_squared_cross_mark:
+  - 软件系统
+  - 任务管理与调度:negative_squared_cross_mark:
 - 操作系统
   - 第一章​
   - 进程与线程:negative_squared_cross_mark:
 - 软件工程
   - 简介
-  - 软件工程简介​ :negative_squared_cross_mark:
+  - 软件工程简介​ 
+  - 软件的过程模型:negative_squared_cross_mark:
