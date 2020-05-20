@@ -136,22 +136,22 @@ int main()
     void *handle = dlopen("./libtest.so", RTLD_LAZY);// 以类的方式打开当前目录下的libtest.so
     if(0 == handle)
     {
-	cout << "dlopen error" << endl;
-	return 0;
+    cout << "dlopen error" << endl;
+    return 0;
     }
-    
+
     typedef void (*Fun)();// f和g的函数原型
 
-    Fun f1 = (Fun)dlsym(handle, "f");//f1函数原型 
+    Fun f1 = (Fun)dlsym(handle, "f");//f1函数原型
 
     if(0 == f1)
     {
-	cout << "f1 error" << endl;
-    	char *str = dlerror();
-	cout << str << endl;
-	return 0;
+    cout << "f1 error" << endl;
+        char *str = dlerror();
+    cout << str << endl;
+    return 0;
     }
-	
+
     (*f1)(); //用函数指针调用函数
 
     dlclose(handle);
@@ -244,11 +244,11 @@ this指针存放于ecx寄存器中
 
 ```c
 struct A{
-	int i;
+    int i;
 };//4字节
 struct A{
     char j;
-	int i;
+    int i;
 };//一字节对齐5字节，二字节对齐6字节，四字节对齐8B
 struct B{
     char j;
@@ -340,6 +340,8 @@ void setvbuf(FILE *fp, char *buf, int mode, size_t size);
 ```
 
 fp：fopen函数的返回值
+
+![setbuf与setvbuf](标准IO.assets/setbuf与setvbuf.png)
 
 ```c
 int main(){
@@ -535,7 +537,7 @@ int main(){
     }
 
     printf("%s\n", buf);
-    
+
     if (fgets(buf, 10, fp) == NULL){
         printf("file end\n");
     }
@@ -551,10 +553,10 @@ int main(){
 ```c
 int main(){
     char buf[10];
-    FILE *fp;    
+    FILE *fp;
     fp = fopen("b.txt", "r");//b.txt两行的文件
-    
-    fgets(buf, 10, fp);    
+
+    fgets(buf, 10, fp);
     printf("%s\n", buf);
     fclose(fp);
     return 0;
@@ -631,9 +633,9 @@ int sscanf(char *buf, const char *format, ...);
 ```c
 char *tmpnam ( char *ptr );
 FILE *tmpfile ( void );   /* 返回文件指针 */
-char *tempnam ( const char *directory, const char *prefix ); 
+char *tempnam ( const char *directory, const char *prefix );
 ```
 
--  第一个函数产生一个与现在文件名不同的有效路径名字符串（每次调用均不同）
+- 第一个函数产生一个与现在文件名不同的有效路径名字符串（每次调用均不同）
 - 第二个函数创建一个临时二进制文件（wb+），在关闭该文件或程序结束时，该文件自动删除
 - 第三个函数是第一个函数的变体，在产生路径名时，指定其目录和文件名前缀
