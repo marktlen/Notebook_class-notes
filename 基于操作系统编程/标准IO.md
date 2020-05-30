@@ -119,7 +119,9 @@ handle：dlopen的返回值
 
 动态库使用者的编译
 
-\#g++ -o test test.cpp –ldl
+```bash
+$g++ -o test test.cpp –ldl
+```
 
 \#test    出错？
 
