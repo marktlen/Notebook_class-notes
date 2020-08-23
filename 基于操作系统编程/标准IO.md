@@ -205,42 +205,47 @@ extern “C”：告诉编译器按C语言的方式设定函数的导出名
 
 #### 函数调用约定
 
-C语言调用约定，规范传参
+##### C语言调用约定，规范传参
 
 ```c
 void __cdecl f(int a, int b);  //VC环境
 void f(int a, int b) __attribute__((cdecl)) //g++环境
 ```
 
-f被表示成_f（不同版本编译器不一定一样
+- f被表示成_f（不同版本编译器不一定一样）
 
-从右至左，将参数压入堆栈（通过栈来传递参数
+- 从右至左，将参数压入堆栈（通过栈来传递参数）
 
-函数调用者负责压入参数和堆栈平衡
+- 函数调用者负责压入参数和堆栈平衡
+
+##### 标准调用约定
 
 ```c
 void __stdcall f(int a, int b);  //VC环境
 ```
 
-f被表示成_f@8；8表示参数的字节数，两个参数是8字节
+- f被表示成_f@8；8表示参数的字节数，两个参数是8字节
 
-从右至左，将参数压入堆栈
+- 从右至左，将参数压入堆栈
 
-函数内负责堆栈平衡
+- 函数内负责堆栈平衡
+
+##### 快速调用约定
 
 ```c
 void __fastcall f(int a, int b);  //VC环境
 ```
 
-由寄存器传送参数，用ecx和edx传送参数列表中前两个双字或更小的参数，剩下的参数仍然从右至左压入堆栈
+- 由寄存器传送参数，用ecx和edx传送参数列表中前两个双字或更小的参数，剩下的参数仍然从右至左压入堆栈
 
-函数内负责堆栈平衡（64位寄存器前7个用寄存器传
+- 函数内负责堆栈平衡（64位寄存器前7个用寄存器传
 
-C++类成员函数的调用约定：thiscall （可以通过压栈来传，可以通过寄存器传，64位用RDI寄存器存放this指针
+- C++类成员函数的调用约定：thiscall （可以通过压栈来传，可以通过寄存器传，64位用RDI寄存器存放this指针）
 
-this指针存放于ecx寄存器中
+- this指针存放于ecx寄存器中
 
-参数从右至左压入堆栈
+- 参数从右至左压入堆栈
+
 
 #### 结构体大小:star:
 
@@ -377,7 +382,7 @@ fp：文件指针；若fp=NULL，则刷新所有输出流
 
 ![各种缓冲](标准IO.assets/各种缓冲.png)
 
-#### 流的定向
+### 流的定向
 
 对于ASCII字符集，一个字符用一个字节表示
 
@@ -435,21 +440,22 @@ FILE *fdopen(int filedes, const char *type);
 - type：指定流的读写方式
 - 返回文件指针
 
-fdopen常用于由创建管道和网络通信通道函数返回的描述符。
+特性与用途
 
-这些特殊类型的文件，不能用fopen打开
+- fdopen常用于由创建管道和网络通信通道函数返回的描述符。
 
-因此必须先调用设备专用函数以获得一个文件描述符
+- 这些特殊类型的文件，不能用fopen打开
 
-然后再用fdopen使一个标准I/O流与该描述符相关联
+- 因此必须先调用设备专用函数以获得一个文件描述符
 
-对于fdopen函数，type参数的意义稍由区别
+- 然后再用fdopen使一个标准I/O流与该描述符相关联
 
-因为该描述符已被打开，所以fdopen为写而打开并不截短该文件
+- 对于fdopen函数，type参数的意义稍由区别
 
-标准I/O添写方式，也不能用于创建该文件
+- 因为该描述符已被打开，所以fdopen为写而打开并不截短该文件
 
- （因为如若一个描述符引用一个文件，则该文件一定已经存在）
+- 标准I/O添写方式，也不能用于创建该文件（因为如若一个描述符引用一个文件，则该文件一定已经存在）
+
 
 #### fclose函数
 
@@ -471,22 +477,46 @@ fp：要关闭的流对应的文件指针
 
 通常有两种方法定位标准I/O流
 
-ftell、fseek函数。
+#### ftell、fseek函数
 
-fgetpos、fsetpos函数。
+```c
+long ftell(FILE *fp);//用于获取当前文件偏移量
+int fseek(FILE *fp, long offset, int whence);//用于设置当前文件偏移量
+```
+
+#### fgetpos、fsetpos函数
+
+```c
+int fgetpos(FILE *fp, fpos_t *pos);//获取当前文件偏移量
+//pos: fgetpos函数将文件偏移量填入pos中
+
+int fsetpos(FILE *fp, fpos_t *pos);//设置文件偏移量
+//pos：存储了要设置的文件偏移量
+```
 
 后者是ANSI C引入的。程序要移植到非unix类操作系统，应使用后者。
 
 ## 读写流
 
-- 对流有三种读写方式
+对流有三种读写方式
+
 - 每次读写一个字符
 - 每次读写一行
 - 每次读写任意长度的内容
 
-### 出错or文件尾
+### 每次读写一个字符
 
-调用ferror或feof
+```c
+int getc(FILE *fp);		//通常是宏
+int fgetc(FILE *fp);	//函数
+int getchar();//等同于getc(stdin)
+```
+
+成功返回欲读字符，若已处于文件尾或出错返回EOF
+
+#### 出错or文件尾
+
+不管出错还是到达文件尾，都是返回EOF。调用ferror或feof
 
 ```c
 int ferror(FILE *fp);
@@ -503,18 +533,27 @@ int feof(FILE *fp);
 
 调用clearerr清除这两个标志
 
+```c
 void clearerr(FILE *fp);
+```
 
 ### 每次读写一行
 
 ```c
 char* fgets(char *buf, int n, FILE *fp);
-```
-
+/*
 - buf：存放从fp读出的数据
 - n：buf的大小
 - fp：文件指针
 - 返回值：成功返回buf，出错或读到文件尾则为EOF
+*/
+char* fputs(const char *str, FILE *fp);
+/*
+str：以null为结尾的字符串
+fp：文件指针
+返回值：成功返回非负值，出错则为EOF
+*/
+```
 
 fgets函数一直读到下一个新行符为止，但是不超过n-1个字符
 
@@ -576,10 +615,10 @@ size_t fread(void *ptr, size_t size, size_t nobj, FILE *fp);
 size_t fwrite(const void *ptr, size_t size, size_t nobj, FILE *fp);
 ```
 
-- 第一个参数ptr：用于读写的缓冲区
-- 第二个参数size：每个对象的大小
-- 第三个参数nobj：要读写的对象个数
-- 第四个参数fp：文件指针
+- ptr：用于读写的缓冲区
+- size：每个对象的大小
+- nobj：要读写的对象个数
+- fp：文件指针
 
 返回值
 
@@ -598,6 +637,8 @@ fwrite(&item, sizeof(item), 1, fp);
 ```
 
 ## 格式化IO
+
+### 格式化输出
 
 ```c
 int printf(const char* format, ....);
@@ -620,7 +661,7 @@ int snprintf(char* buf, size_t n, const char* format, ……);
 
 缓冲区长度为n，超过缓冲区尾端的任何字符都会被丢弃
 
-格式化输入函数
+### 格式化输入函数
 
 ```c
 int scanf(const char* format, ....);
