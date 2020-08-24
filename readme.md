@@ -4,8 +4,6 @@
 
 笔记包含mermaid插件显示为保证效果请使用[Typora](https://typora.io/)进行查看
 
-img文件夹用于存放图片
-
 笔记状态：未完成:negative_squared_cross_mark:
 
 笔记树
@@ -30,7 +28,7 @@ img文件夹用于存放图片
   - [内存管理](操作系统/内存管理.md)
   - [设备管理](操作系统/设备管理.md)
   - [文件](操作系统/文件.md)
-- 软件工程
+- 软件工程:negative_squared_cross_mark:
   - 简介
   - 软件工程简介
   - 软件的过程模型
